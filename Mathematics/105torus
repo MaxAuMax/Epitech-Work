@@ -1,0 +1,159 @@
+#!/usr/bin/python3
+
+##
+## EPITECH PROJECT, 2021
+## Maths
+## File description:
+## 105torus
+##
+
+# Importing modules to make the program work
+import sys
+from math import *
+
+########################################################################################### MAIN ##########################################################################################
+
+def main():
+    # Checking validity of the input
+    if (len(sys.argv) == 2):
+        if (sys.argv[1] == "-h"):
+            usage()
+            sys.exit(0)
+        else:
+            sys.exit(84)
+    elif (len(sys.argv) == 8):
+        pass
+    else:
+        usage()
+        sys.exit(84)
+
+    # Checking index of the arguments
+    try:
+        opt = sys.argv[1]
+        a0 = sys.argv[2]
+        a1 = sys.argv[3]
+        a2 = sys.argv[4]
+        a3 = sys.argv[5]
+        a4 = sys.argv[6]
+        n = sys.argv[7]
+    except IndexError:
+        sys.exit(84)
+
+    # Checking if arguments are int
+    try:
+        opt = int(sys.argv[1])
+        a0 = int(sys.argv[2])
+        a1 = int(sys.argv[3])
+        a2 = int(sys.argv[4])
+        a3 = int(sys.argv[5])
+        a4 = int(sys.argv[6])
+        n = int(sys.argv[7])
+    except ValueError:
+        sys.exit(84)
+
+    if (n <= 0):
+        sys.exit(84)
+
+    # Bisection
+    if (int(opt) == 1):
+        bisection(a0, a1, a2, a3, a4, n)
+        sys.exit(0)
+    # Newton
+    elif (int(opt) == 2):
+        newton(a0, a1, a2, a3, a4, n)
+        sys.exit(0)
+    # Secant
+    elif (int(opt) == 3):
+        secant(a0, a1, a2, a3, a4, n)
+        sys.exit(0)
+    # Invalid argument
+    else:
+        usage()
+        sys.exit(84)
+
+######################################################################################### BISECTION ########################################################################################
+
+def bisection(a0, a1, a2, a3, a4, n):
+    count = 0
+    x1 = 0
+    x2 = 1
+    xm = (float(x1) + float(x2)) / 2
+    while (abs(float(((a4 * xm ** 4) + (a3 * xm ** 3) + (a2 * xm ** 2) + (a1 * xm ** 1) + (a0 * xm ** 0)))) >= 10 ** -n):
+        count += 1
+        if (count == 100):
+            break
+        xm = (float(x1) + float(x2)) / 2
+        if (((a4 * x1 ** 4) + (a3 * x1 ** 3) + (a2 * x1 ** 2) + (a1 * x1 ** 1) + (a0 * x1 ** 0)) * ((a4 * xm ** 4) + (a3 * xm ** 3) + (a2 * xm ** 2) + (a1 * xm ** 1) + (a0 * xm ** 0)) < 0):
+            x2 = xm
+            if (float(str("%." + str(n) + "f") % (x2)) == x2):
+                print ("x =", x2)
+            else:
+                print (str("x = " + str("%." + str(n) + "f") % (x2)))
+        else:
+            x1 = float(xm)
+            if (float(str("%." + str(n) + "f") % (x1)) == x1):
+                print ("x =", x1)
+            else:
+                print (str("x = " + str("%." + str(n) + "f") % (x1)))
+
+########################################################################################## NEWTON ##########################################################################################
+
+def newton(a0, a1, a2, a3, a4, n):
+    xm = 0.5
+    if (float(str("%." + str(n) + "f") % (xm)) == xm):
+        print ("x =", xm)
+    else:
+        print (str("x = " + str("%." + str(n) + "f") % xm))
+    xm = xm - ((((a4 * xm ** 4) + (a3 * xm ** 3) + (a2 * xm ** 2) + (a1 * xm ** 1) + (a0 * xm ** 0))) / (((4 * a4 * xm ** 3) + (3 * a3 * xm ** 2) + (2 * a2 * xm ** 1) + (1 * a1 * xm ** 0))))
+    while (abs(float(((a4 * xm ** 4) + (a3 * xm ** 3) + (a2 * xm ** 2) + (a1 * xm ** 1) + (a0 * xm ** 0)))) >= 10 ** -n):
+        print (str("x = " + str("%." + str(n) + "f") % (xm)))
+        xm = xm - ((((a4 * xm ** 4) + (a3 * xm ** 3) + (a2 * xm ** 2) + (a1 * xm ** 1) + (a0 * xm ** 0))) / (((4 * a4 * xm ** 3) + (3 * a3 * xm ** 2) + (2 * a2 * xm ** 1) + (1 * a1 * xm ** 0))))
+    print (str("x = " + str("%." + str(n) + "f") % (xm)))
+
+########################################################################################## SECANT ##########################################################################################
+
+def secant(a0, a1, a2, a3, a4, n):
+    count = 0
+    x1 = 0
+    x2 = 1
+    top_divide = ((a4 * x2 ** 4) + (a3 * x2 ** 3) + (a2 * x2 ** 2) + (a1 * x2 ** 1) + (a0 * x2 ** 0))
+    bot_divide = ((a4 * x2 ** 4) + (a3 * x2 ** 3) + (a2 * x2 ** 2) + (a1 * x2 ** 1) + (a0 * x2 ** 0)) - ((a4 * x1 ** 4) + (a3 * x1 ** 3) + (a2 * x1 ** 2) + (a1 * x1 ** 1) + (a0 * x1 ** 0))
+    if (bot_divide == 0):
+        sys.exit(84)
+    xm = x2 - (top_divide / bot_divide)
+    x1 = x2
+    x2 = xm
+    if (float(str("%." + str(n) + "f") % (xm)) == xm):
+        print ("x =", x2)
+    else:
+        print (str("x = " + str("%." + str(n) + "f") % xm))
+    while (abs(float((a4 * xm ** 4) + (a3 * xm ** 3) + (a2 * xm ** 2) + (a1 * xm ** 1) + (a0 * xm ** 0))) >= 10 ** -n):
+        count += 1
+        if (count == 100):
+            break
+        top_divide = ((a4 * x2 ** 4) + (a3 * x2 ** 3) + (a2 * x2 ** 2) + (a1 * x2 ** 1) + (a0 * x2 ** 0)) * (x2 - x1)
+        bot_divide = ((a4 * x2 ** 4) + (a3 * x2 ** 3) + (a2 * x2 ** 2) + (a1 * x2 ** 1) + (a0 * x2 ** 0)) - ((a4 * x1 ** 4) + (a3 * x1 ** 3) + (a2 * x1 ** 2) + (a1 * x1 ** 1) + (a0 * x1 ** 0))
+        if (bot_divide == 0):
+            sys.exit(84)
+        xm = x2 - (top_divide / bot_divide)
+        x1 = x2
+        x2 = xm
+        if (float(str("%." + str(n) + "f") % (xm)) == xm):
+            print ("x =", x2)
+        else:
+            print (str("x = " + str("%." + str(n) + "f") % xm))
+
+########################################################################################## USAGE ##########################################################################################
+
+def usage():
+    print("USAGE")
+    print("\t./105torus opt a0 a1 a2 a3 a4 n")
+    print("")
+    print("DESCRIPTION")
+    print("\topt   \tmethod option:\n\t\t    1 for the bisection method\n\t\t    2 for Newton's method\n\t\t    3 for the secant method")
+    print("\ta[0-4]\tcoefficients of the equation")
+    print("\tn\tprecision (the application of the polynomial to the solution should\n\t\tbe smaller than 10^-n)")
+
+###################################################################################### CALL PROGRAM ######################################################################################
+
+main()

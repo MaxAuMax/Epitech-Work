@@ -1,0 +1,206 @@
+#!/usr/bin/python3
+
+##
+## EPITECH PROJECT, 2021
+## Maths
+## File description:
+## 102architect
+##
+
+# Importing modules to make the program work
+import sys
+from math import *
+
+# Main function of 102architect
+def main():
+    # Verifying if there are the good number of parameters
+    if (len(sys.argv) < 3):
+        usage()
+        sys.exit(84)
+
+    # Defining the matrix
+    matrix = [1.00, 0.00, 0.00,
+              0.00, 1.00, 0.00,
+              0.00, 0.00, 1.00]
+
+    # Defining a base matrix
+    tmpmat = [1.00, 0.00, 0.00,
+              0.00, 1.00, 0.00,
+              0.00, 0.00, 1.00]
+
+    # Defining start
+    itr = 3
+
+    # Doing geometric operations
+    while itr < len(sys.argv) :
+        # Rotation
+        if (sys.argv[itr] == "-r") :
+            print ("Rotation by a " + str(sys.argv[itr + 1] + " degree angle"))
+            tmpmat = reset_matrix(tmpmat)
+            tmpmat[0] = cos(float(sys.argv[itr + 1]) / 180 * pi)
+            tmpmat[1] = -sin(float(sys.argv[itr + 1]) / 180 * pi)
+            tmpmat[3] = sin(float(sys.argv[itr + 1]) / 180 * pi)
+            tmpmat[4] = tmpmat[0]
+            matrix = matrix_product(tmpmat, matrix)
+            itr = itr + 2
+            continue
+        # Symmetry
+        elif (sys.argv[itr] == "-s") :
+            print ("Reflection over an axis with an inclination angle of " + str(sys.argv[itr + 1] + " degrees"))
+            tmpmat = reset_matrix(tmpmat)
+            tmpmat[0] = cos(2 * float(sys.argv[itr + 1]) / 180 * pi)
+            tmpmat[1] = sin(2 * float(sys.argv[itr + 1]) / 180 * pi)
+            tmpmat[3] = sin(2 * float(sys.argv[itr + 1]) / 180 * pi)
+            tmpmat[4] = -tmpmat[0]
+            matrix = matrix_product(tmpmat, matrix)
+            itr = itr + 2
+            continue
+        # Translation
+        elif (sys.argv[itr] == "-t") :
+            print ("Translation along vector (" + str(sys.argv[itr + 1] + ", " + str(sys.argv[itr + 2] + ")")))
+            tmpmat = reset_matrix(tmpmat)
+            tmpmat[2] += float(sys.argv[itr + 1])
+            tmpmat[5] += float(sys.argv[itr + 2])
+            matrix = matrix_product(tmpmat, matrix)
+            itr = itr + 3
+            continue
+        # Homothety
+        elif (sys.argv[itr] == "-z") :
+            print ("Scaling by factors " + str(sys.argv[itr + 1] + " and " + str(sys.argv[itr + 2])))
+            tmpmat = reset_matrix(tmpmat)
+            tmpmat[0] *= float(sys.argv[itr + 1])
+            tmpmat[4] *= float(sys.argv[itr + 2])
+            matrix = matrix_product(tmpmat, matrix)
+            itr = itr + 3
+            continue
+        else :
+            usage()
+            sys.exit(84)
+
+
+    # Fixing -0.00 error
+    for i in range(6) :
+        if (-0.001 <= matrix[i] <= 0) :
+            matrix[i] = 0
+
+    # Printing the matrix
+    print ("%.2f %.2f %.2f" %(matrix[0], matrix[1], matrix[2]))
+    print ("%.2f %.2f %.2f" %(matrix[3], matrix[4], matrix[5]))
+    print ("%.2f %.2f %.2f" %(matrix[6], matrix[7], matrix[8]))
+
+    # Printing the result
+    final_x = matrix[0] * float(sys.argv[1]) + matrix[1] * float(sys.argv[2]) + matrix[2]
+    final_y = matrix[3] * float(sys.argv[1]) + matrix[4] * float(sys.argv[2]) + matrix[5]
+    if (-0.001 <= final_x <= 0) :
+        final_x = 0
+    if (-0.001 <= final_y <= 0) :
+        final_y = 0
+    print ("(%.2f, %.2f) => (%.2f, %.2f)" %(float(sys.argv[1]), float(sys.argv[2]), final_x, final_y))
+
+# Matrix product
+def matrix_product(matrix1, matrix2) :
+    new_matrix = [matrix1[0]*matrix2[0] + matrix1[1]*matrix2[3] + matrix1[2]*matrix2[6], matrix1[0]*matrix2[1] + matrix1[1]*matrix2[4] + matrix1[2]*matrix2[7], matrix1[0]*matrix2[2] + matrix1[1]*matrix2[5] + matrix1[2]*matrix2[8],
+                  matrix1[3]*matrix2[0] + matrix1[4]*matrix2[3] + matrix1[5]*matrix2[6], matrix1[3]*matrix2[1] + matrix1[4]*matrix2[4] + matrix1[5]*matrix2[7], matrix1[3]*matrix2[2] + matrix1[4]*matrix2[5] + matrix1[5]*matrix2[8],
+                  matrix1[6]*matrix2[0] + matrix1[7]*matrix2[3] + matrix1[8]*matrix2[6], matrix1[6]*matrix2[1] + matrix1[7]*matrix2[4] + matrix1[8]*matrix2[7], matrix1[6]*matrix2[2] + matrix1[7]*matrix2[5] + matrix1[8]*matrix2[8]]
+    return (new_matrix)
+
+# Reset matrix
+def reset_matrix(matrix) :
+    matrix = [1.00, 0.00, 0.00,
+              0.00, 1.00, 0.00,
+              0.00, 0.00, 1.00]
+    return (matrix)
+
+# -r errors
+def r_too_many_args() :
+    usage()
+    print ("")
+    print ("PROBLEM")
+    print ("    Too many arguments for rotation (there must be one)")
+
+def r_not_enough_args() :
+    usage()
+    print ("")
+    print ("PROBLEM")
+    print ("    Not enough arguments for rotation (there must be one)")
+
+def r_incorrect_args() :
+    usage()
+    print ("")
+    print ("PROBLEM")
+    print ("    Incorrect arguments for rotation (must be int or float)")
+
+# -s errors
+def s_too_many_args() :
+    usage()
+    print ("")
+    print ("PROBLEM")
+    print ("    Too many arguments for symmetry (there must be one)")
+
+def s_not_enough_args() :
+    usage()
+    print ("")
+    print ("PROBLEM")
+    print ("    Not enough arguments for symmetry (there must be one)")
+
+def s_incorrect_args() :
+    usage()
+    print ("")
+    print ("PROBLEM")
+    print ("    Incorrect arguments for symmetry (must be int or float)")
+
+# -t errors
+def t_too_many_args() :
+    usage()
+    print ("")
+    print ("PROBLEM")
+    print ("    Too many arguments for translation (there must be two)")
+
+def t_not_enough_args() :
+    usage()
+    print ("")
+    print ("PROBLEM")
+    print ("    Not enough arguments for translation (there must be two)")
+
+def t_incorrect_args() :
+    usage()
+    print ("")
+    print ("PROBLEM")
+    print ("    Incorrect arguments for translation (must be int or float)")
+
+# -z errors
+def z_too_many_args() :
+    usage()
+    print ("")
+    print ("PROBLEM")
+    print ("    Too many arguments for homothety (there must be two)")
+
+def z_not_enough_args() :
+    usage()
+    print ("")
+    print ("PROBLEM")
+    print ("    Not enough arguments for homothety (there must be two)")
+
+def z_incorrect_args() :
+    usage()
+    print ("")
+    print ("PROBLEM")
+    print ("    Incorrect arguments for homothety (must be int or float)")
+
+# Usage
+def usage() :
+    print("USAGE")
+    print("    ./102architect x y transfo1 arg11 [arg12] [transfo2 arg12 [arg22]] ...")
+    print("")
+    print("DESCRIPTION")
+    print("    x   abscissa of the original point")
+    print("    y   ordinate of the original point")
+    print("")
+    print("    transfo arg1 [arg2]")
+    print("    -t i j  translation along vector (i, j)")
+    print("    -z m n  scaling by factors m (x-axis) and n (y-axis)")
+    print("    -r d    rotation centered in O by a d degree angle")
+    print("    -s d    reflection over the axis passing through O with an inclination")
+    print("            angle of d degrees")
+
+main()

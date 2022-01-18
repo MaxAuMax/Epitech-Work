@@ -1,0 +1,191 @@
+#!/usr/bin/python3
+
+##
+## EPITECH PROJECT, 2021
+## Maths
+## File description:
+## 104intersection
+##
+
+# Importing modules to make the program work
+import sys
+from math import *
+
+####################################################################### MAIN ######################################################################
+
+def main():
+    # Checking validity of the input
+    if (len(sys.argv) == 2):
+        if (sys.argv[1] == "-h"):
+            usage()
+            sys.exit(0)
+        else:
+            sys.exit(84)
+    elif (len(sys.argv) == 9):
+        pass
+    else:
+        usage()
+        sys.exit(84)
+
+    # Checking index of the arguments
+    try:
+        opt = sys.argv[1]
+        xp = sys.argv[2]
+        yp = sys.argv[3]
+        zp = sys.argv[4]
+        xv = sys.argv[5]
+        yv = sys.argv[6]
+        zv = sys.argv[7]
+        p = sys.argv[8]
+    except IndexError:
+        sys.exit(84)
+
+    # Checking if arguments are int
+    try:
+        opt = int(sys.argv[1])
+        xp = int(sys.argv[2])
+        yp = int(sys.argv[3])
+        zp = int(sys.argv[4])
+        xv = int(sys.argv[5])
+        yv = int(sys.argv[6])
+        zv = int(sys.argv[7])
+        p = int(sys.argv[8])
+    except ValueError:
+        sys.exit(84)
+
+    if ((p <= 0) or (opt == 3 and p >= 90)):
+        sys.exit(84)
+
+    # Sphere
+    if (int(opt) == 1):
+        sphere(xp, yp, zp, xv, yv, zv, p)
+        sys.exit(0)
+    # Cylinder
+    elif (int(opt) == 2):
+        cylinder(xp, yp, zp, xv, yv, zv, p)
+        sys.exit(0)
+    # Cone
+    elif (int(opt) == 3):
+        cone(xp, yp, zp, xv, yv, zv, p)
+        sys.exit(0)
+    # Invalid argument
+    else:
+        usage()
+        sys.exit(84)
+
+###################################################################### SPHERE #####################################################################
+
+# Function for the sphere
+def sphere(xp, yp, zp, xv, yv, zv, p):
+    print("Sphere of radius %i" %(p))
+    a = xv**2 + yv**2 + zv**2
+    b = 2 * xp * xv + 2 * yp * yv + 2 * zp * zv
+    c = xp**2 + yp**2 + zp**2 - p**2
+
+    if (a == 0):
+        sys.exit(84)
+
+    intersection(a, b, c, xp, yp, zp, xv, yv, zv)
+
+##################################################################### CYLINDER ####################################################################
+
+# Function for the cylinder
+def cylinder(xp, yp, zp, xv, yv, zv, p):
+    print("Cylinder of radius %i" %(p))
+    a = xv**2 + yv**2
+    b = 2 * xp * xv + 2 * yp * yv
+    c = xp**2 + yp**2 - p**2
+
+    if (a == 0):
+        intersection_cylinder(c, xp, yp, zp, xv, yv, zv)
+    else:
+        intersection(a, b, c, xp, yp, zp, xv, yv, zv)
+
+####################################################################### CONE ######################################################################
+
+# Function for the cone
+def cone(xp, yp, zp, xv, yv, zv, p):
+    print("Cone with a %i degree angle" %(p))
+    p *= pi/180
+    a = xv**2 + yv**2 - (zv*tan(p))**2
+    b = 2 * xp * xv + 2 * yp * yv - 2 * zp * zv * tan(p)**2
+    c = xp**2 + yp**2 - zp**2 * tan(p)**2
+
+    if (a == 0):
+        intersection_cone(b, c, xp, yp, zp, xv, yv, zv)
+    else:
+        intersection(a, b, c, xp, yp, zp, xv, yv, zv)
+
+################################################################### INTERSECTION ##################################################################
+
+# Intersection for non-specific cases
+def intersection(a, b, c, xp, yp, zp, xv, yv, zv):
+    print("Line passing through the point (%i, %i, %i) and parallel to the vector (%i, %i, %i)" %(xp, yp, zp, xv, yv, zv))
+
+    delta = b**2 - 4 * a * c
+
+    if (delta < 0):
+        print("No intersection point.")
+    elif (delta == 0):
+        l = -b / (2 * a)
+        xi = xp + l * xv
+        yi = yp + l * yv
+        zi = zp + l * zv
+        print("1 intersection point:")
+        print("(%.3f, %.3f, %.3f)" %(xi, yi, zi))
+    else:
+        lmin = (-b - sqrt(delta)) / (2 * a)
+        lpos = (-b + sqrt(delta)) / (2 * a)
+        ximin = xp + lmin * xv
+        yimin = yp + lmin * yv
+        zimin = zp + lmin * zv
+        xipos = xp + lpos * xv
+        yipos = yp + lpos * yv
+        zipos = zp + lpos * zv
+
+        print("2 intersection points:")
+        print("(%.3f, %.3f, %.3f)" %(xipos, yipos, zipos))
+        print("(%.3f, %.3f, %.3f)" %(ximin, yimin, zimin))
+
+# Intersection for the cylinder if a equals 0
+def intersection_cylinder(c, xp, yp, zp, xv, yv, zv):
+    if (zv == 0):
+        sys.exit(84)
+    else:
+        print("Line passing through the point (%i, %i, %i) and parallel to the vector (%i, %i, %i)" %(xp, yp, zp, xv, yv, zv))
+        if (c == 0):
+            print("There is an infinite number of intersection points.")
+        else:
+            print("No intersection point.")
+
+# Intersection for the cone if a equals 0
+def intersection_cone(b, c, xp, yp, zp, xv, yv, zv):
+    print("Line passing through the point (%i, %i, %i) and parallel to the vector (%i, %i, %i)" %(xp, yp, zp, xv, yv, zv))
+    if (b == 0):
+        if (c == 0):
+            print("There is an infinite number of intersection points.")
+        else:
+            print("No intersection point.")
+    else:
+        l = -c / b
+        xi = xp + l * xv
+        yi = yp + l * yv
+        zi = zp + l * zv
+        print("1 intersection point.")
+        print("(%.3f, %.3f, %.3f)" %(xi, yi, zi))
+
+###################################################################### USAGE ######################################################################
+
+def usage():
+    print("USAGE")
+    print("\t./104intersection opt xp yp zp xv yv zv p")
+    print("")
+    print("DESCRIPTION")
+    print("\topt\t\tsurface option: 1 for a sphere, 2 for a cylinder, 3 for a cone")
+    print("\t(xp, yp, zp)\tcoordinates of a point by which the light ray passes through")
+    print("\t(xv, yv, zv)\tcoordinates of a vector parallel to the light ray")
+    print("\tp\t\tparameter: radius of the sphere, radius of the cylinder, or\n\t\t\tangle formed by the cone and the Z-axis")
+
+################################################################## CALL PROGRAM ##################################################################
+
+main()

@@ -1,0 +1,330 @@
+#!/usr/bin/python3
+
+##
+## EPITECH PROJECT, 2021
+## Maths
+## File description:
+## 103cipher
+##
+
+# Importing modules to make the program work
+import sys, re
+from math import *
+
+####################################################################### MAIN ######################################################################
+
+def main():
+    # Checking errors
+    if (len(sys.argv) == 2):
+        if (sys.argv[1] == "-h"):
+            usage()
+            sys.exit(0)
+        else:
+            sys.exit(84)
+    elif (len(sys.argv) == 4):
+        pass
+    else:
+        usage()
+        sys.exit(84)
+
+    # Cryption
+    if (sys.argv[3] == '0'):
+        display_crypted_key_matrix(crypt_key())
+        display_crypted_message(crypt_message(crypt_key(), crypt_phrase()))
+        sys.exit(0)
+    # Decryption
+    elif (sys.argv[3] == '1'):
+        display_inverted_key_matrix(decrypt_key())
+        display_decrypted_message(decrypt_message(decrypt_key(), decrypt_phrase()))
+        sys.exit(0)
+    # If can't crypt or decrypt
+    else:
+        sys.exit(84)
+
+###################################################################### CRYPT ######################################################################
+
+# Function displaying the crypted message
+def display_crypted_message(crypted_message):
+    print ("\nEncrypted message:")
+    print (*crypted_message)
+
+# Function displaying the crypted key matrix
+def display_crypted_key_matrix(matrix):
+    if (len(matrix) == 1):
+        print ("Key matrix:")
+        print ("%i" %(matrix[0]))
+    elif (len(matrix) == 4):
+        print ("Key matrix:")
+        print ("%i\t%i" %(matrix[0], matrix[1]))
+        print ("%i\t%i" %(matrix[2], matrix[3]))
+    elif (len(matrix) == 9):
+        print ("Key matrix:")
+        print ("%i\t%i\t%i" %(matrix[0], matrix[1], matrix[2]))
+        print ("%i\t%i\t%i" %(matrix[3], matrix[4], matrix[5]))
+        print ("%i\t%i\t%i" %(matrix[6], matrix[7], matrix[8]))
+    elif (len(matrix) == 16):
+        print ("Key matrix:")
+        print ("%i\t%i\t%i\t%i" %(matrix[0], matrix[1], matrix[2], matrix[3]))
+        print ("%i\t%i\t%i\t%i" %(matrix[4], matrix[5], matrix[6], matrix[7]))
+        print ("%i\t%i\t%i\t%i" %(matrix[8], matrix[9], matrix[10], matrix[11]))
+        print ("%i\t%i\t%i\t%i" %(matrix[12], matrix[13], matrix[14], matrix[15]))
+    else:
+        sys.exit(84)
+
+# Function crypting the message
+def crypt_message(key_matrix, phrase_matrix):
+    matrix = []
+    j = 0
+
+    if (len(key_matrix) == 1):
+        for k in range(int(len(phrase_matrix))):
+            for i in range (1):
+                crypted = key_matrix[0 + i] * phrase_matrix[j]
+                matrix.append(crypted)
+            j += 1
+        return matrix
+    elif (len(key_matrix) == 4):
+        for k in range(int(len(phrase_matrix)/2)):
+            for i in range (2):
+                crypted = key_matrix[0 + i] * phrase_matrix[j] + key_matrix[2 + i] * phrase_matrix[j + 1]
+                matrix.append(crypted)
+            j += 2
+        return matrix
+    elif (len(key_matrix) == 9):
+        for k in range(int(len(phrase_matrix)/3)):
+            for i in range (3):
+                crypted = key_matrix[0 + i] * phrase_matrix[j] + key_matrix[3 + i] * phrase_matrix[j + 1] + key_matrix[6 + i] * phrase_matrix[j + 2]
+                matrix.append(crypted)
+            j += 3
+        return matrix
+    elif (len(key_matrix) == 16):
+        for k in range(int(len(phrase_matrix)/4)):
+            for i in range (4):
+                crypted = key_matrix[0 + i] * phrase_matrix[j] + key_matrix[4 + i] * phrase_matrix[j + 1] + key_matrix[8 + i] * phrase_matrix[j + 2] + key_matrix[12 + i] * phrase_matrix[j + 3]
+                matrix.append(crypted)
+            j += 4
+        return matrix    
+    else :
+        sys.exit(84)
+
+# Function transforming phrase into ASCII numbers and putting it into matrix
+def crypt_phrase():
+    phrase = str(sys.argv[1])
+    key_matrix = crypt_key()
+    matrix = []
+
+    for i in range(len(sys.argv[1])):
+        matrix.append(ord(phrase[i]))
+
+    if ((len(matrix) % 4 == 1) and (len(key_matrix) != 1)):
+        for i in range(3):
+            matrix.append(0)
+    elif ((len(matrix) % 4 == 2) and (len(key_matrix) != 1)):
+        for i in range(2):
+            matrix.append(0)
+    elif ((len(matrix) % 4 == 3) and (len(key_matrix) != 1)):
+        matrix.append(0)
+    else:
+        pass
+
+    return matrix
+
+# Function transforming key into ASCII numbers and putting it into matrix
+def crypt_key():
+    key = str(sys.argv[2])
+
+    matrix1 = [0]
+
+    matrix2 = [0, 0,
+               0, 0]
+
+    matrix3 = [0, 0, 0,
+               0, 0, 0,
+               0, 0, 0]
+
+    matrix4 = [0, 0, 0, 0,
+               0, 0, 0, 0,
+               0, 0, 0, 0,
+               0, 0, 0, 0]
+
+    if (len(sys.argv[2]) == 1):
+        for i in range(len(sys.argv[2])):
+            matrix1[i] = ord(key[i])
+        return matrix1
+    elif (2 <= len(sys.argv[2]) <= 4):
+        for i in range(len(sys.argv[2])):
+            matrix2[i] = ord(key[i])
+        return matrix2
+    elif (5 <= len(sys.argv[2]) <= 9):
+        for i in range(len(sys.argv[2])):
+            matrix3[i] = ord(key[i])
+        return matrix3
+    elif (10 <= len(sys.argv[2]) <= 16):
+        for i in range(len(sys.argv[2])):
+            matrix4[i] = ord(key[i])
+        return matrix4
+    else:
+        sys.exit(84)
+
+##################################################################### DECRYPT #####################################################################
+
+# Function displaying the decrypted message
+def display_decrypted_message(decrypted_message):
+    for i in range(len(decrypted_message)):
+        decrypted_message[i] = chr(decrypted_message[i])
+    print ("\nDecrypted message:")
+    print (*decrypted_message, sep = "")
+
+# Function displaying the inverted key matrix
+def display_inverted_key_matrix(matrix):
+    if (len(matrix) == 1):
+        print ("Key matrix:")
+        print ("%.3f" %(matrix[0]))    
+    elif (len(matrix) == 4):
+        print ("Key matrix:")
+        print ("%.3f\t%.3f" %(matrix[0], matrix[1]))
+        print ("%.3f\t%.3f" %(matrix[2], matrix[3]))
+    elif (len(matrix) == 9):
+        print ("Key matrix:")
+        print ("%.3f\t%.3f\t%.3f" %(matrix[0], matrix[1], matrix[2]))
+        print ("%.3f\t%.3f\t%.3f" %(matrix[3], matrix[4], matrix[5]))
+        print ("%.3f\t%.3f\t%.3f" %(matrix[6], matrix[7], matrix[8]))
+    else:
+        sys.exit(84)
+
+# Function decrypting the message
+def decrypt_message(key_matrix, phrase_matrix):
+    matrix = []
+    j = 0
+
+    if (len(key_matrix) == 1):
+        for k in range(int(len(phrase_matrix)/1)):
+            for i in range (1):
+                crypted = round(key_matrix[0 + i] * phrase_matrix[j])
+                matrix.append(crypted)
+            j += 1
+        return matrix        
+    elif (len(key_matrix) == 4):
+        for k in range(int(len(phrase_matrix)/2)):
+            for i in range (2):
+                crypted = round(key_matrix[0 + i] * phrase_matrix[j] + key_matrix[2 + i] * phrase_matrix[j + 1])
+                matrix.append(crypted)
+            j += 2
+        return matrix
+    elif (len(key_matrix) == 9):
+        for k in range(int(len(phrase_matrix)/3)):
+            for i in range (3):
+                crypted = round(key_matrix[0 + i] * phrase_matrix[j] + key_matrix[3 + i] * phrase_matrix[j + 1] + key_matrix[6 + i] * phrase_matrix[j + 2])
+                matrix.append(crypted)
+            j += 3
+        return matrix
+    else:
+        sys.exit(84)
+
+# Function putting phrase composed of numbers into matrix
+def decrypt_phrase():
+    phrase = str(sys.argv[1])
+    matrix = [int(s) for s in re.findall(r'\b\d+\b', phrase)]
+
+    return matrix
+
+# Function inverting key matrix
+def decrypt_key():
+    key = crypt_key()
+
+    if (len(key) == 1):
+        keydet = det1(key[0])
+        if (keydet == 0):
+            sys.exit(84)
+        else:
+            invertedkey = inverse_matrix1(key)
+        for i in range(1):
+            if (-0.001 <= invertedkey[i] <= 0):
+                invertedkey[i] = 0
+        return invertedkey
+    elif (len(key) == 4):
+        keydet = det2(key[0], key[1], key[2], key[3])
+        if (keydet == 0):
+            sys.exit(84)
+        else:
+            invertedkey = inverse_matrix2(key)
+            invertedkey = [1 / keydet * invertedkey[0], 1 / keydet * invertedkey[1],
+                           1 / keydet * invertedkey[2], 1 / keydet * invertedkey[3]]
+        for i in range(4):
+            if (-0.001 <= invertedkey[i] <= 0):
+                invertedkey[i] = 0
+        return invertedkey
+    elif (len(key) == 9):
+        keydet = det3(key[0], key[1], key[2], key[3], key[4], key[5], key[6], key[7], key[8])
+        if (keydet == 0):
+            sys.exit(84)
+        else:
+            invertedkey = inverse_matrix3(key)
+            invertedkey = [1 / keydet * invertedkey[0], 1 / keydet * invertedkey[1], 1 / keydet * invertedkey[2],
+                           1 / keydet * invertedkey[3], 1 / keydet * invertedkey[4], 1 / keydet * invertedkey[5],
+                           1 / keydet * invertedkey[6], 1 / keydet * invertedkey[7], 1 / keydet * invertedkey[8]]
+        for i in range(9):
+            if (-0.001 <= invertedkey[i] <= 0):
+                invertedkey[i] = 0
+        return invertedkey
+    else:
+        sys.exit(84)
+
+################################################################### OPERATIONS ##################################################################
+
+# Determinant for 1*1 matrix
+def det1(a):
+    matrixdet = a
+    return (matrixdet)
+
+# Determinant for 2*2 matrix
+def det2(a, b, c, d):
+    matrixdet = a * d - b * c
+    return (matrixdet)
+
+# Determinant for 3*3 matrix
+def det3(a, b, c, d, e, f, g, h, i):
+    matrixdet = a * det2(e, f, h, i) - b * det2(d, f, g, i) + c * det2(d, e, g, h)
+    return (matrixdet)
+
+# Determinant for 4*4 matrix
+def det4(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p):
+    matrixdet = a * det3(f, g, h, j, k, l, n, o, p) - b * det3(e, g, h, i, k, l, m, o, p) + c * det3(e, f, h, i, j, l, m, n, p) - d * det3(e, f, g, i, j, k, m, n, o)
+    return (matrixdet)
+
+# Function inversing 1*1 matrix
+def inverse_matrix1(matrix1):
+    matrix = [1 / matrix1[0]]
+    return matrix
+
+# Function inversing 2*2 matrix
+def inverse_matrix2(matrix2):
+    matrix = [matrix2[3], -matrix2[1],
+              -matrix2[2], matrix2[0]]
+    return matrix
+
+# Function inversing 3*3 matrix
+def inverse_matrix3(matrix3):
+    matrix = [det2(matrix3[4], matrix3[5], matrix3[7], matrix3[8]), det2(matrix3[2], matrix3[1], matrix3[8], matrix3[7]), det2(matrix3[1], matrix3[2], matrix3[4], matrix3[5]),
+              det2(matrix3[5], matrix3[3], matrix3[8], matrix3[6]), det2(matrix3[0], matrix3[2], matrix3[6], matrix3[8]), det2(matrix3[2], matrix3[0], matrix3[5], matrix3[3]),
+              det2(matrix3[3], matrix3[4], matrix3[6], matrix3[7]), det2(matrix3[1], matrix3[0], matrix3[7], matrix3[6]), det2(matrix3[0], matrix3[1], matrix3[3], matrix3[4])]
+    return matrix
+
+# Function inversing 4*4 matrix
+def inverse_matrix4(matrix4):
+    return
+
+##################################################################### USAGE #####################################################################
+
+def usage():
+    print("USAGE")
+    print("\t./103cipher message key flag")
+    print("")
+    print("DESCRIPTION")
+    print("\tmessage     a message, made of ASCII characters")
+    print("\tkey         the encryption key, made of ASCII characters")
+    print("\tflag        0 for the message to be encrypted, 1 to be decrypted")
+
+################################################################## CALL PROGRAM ##################################################################
+
+main()

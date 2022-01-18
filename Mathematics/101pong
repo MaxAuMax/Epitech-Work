@@ -1,0 +1,87 @@
+#!/usr/bin/python3
+
+##
+## EPITECH PROJECT, 2021
+## Maths
+## File description:
+## 101pong
+##
+
+# Importing modules to make the program work
+import sys
+from math import *
+
+# Main function of 101pong
+def main():
+    # Verifying if there are the good number of parameters
+    if (len(sys.argv) != 8) :
+        usage()
+        sys.exit(84)
+
+    # Verifying if time shift is greater than or equal to zero, and is an integer
+    if not sys.argv[7].isnumeric() :
+        wrong_type()
+        sys.exit(84)
+
+    # Assigning values of input to variables
+    x0 = float(sys.argv[1])
+    y0 = float(sys.argv[2])
+    z0 = float(sys.argv[3])
+    x1 = float(sys.argv[4])
+    y1 = float(sys.argv[5])
+    z1 = float(sys.argv[6])
+    n = int(sys.argv[7])
+
+    # Coordinates of the ball after t + n time
+    xt = x1 + n * (x1 - x0)
+    yt = y1 + n * (y1 - y0)
+    zt = z1 + n * (z1 - z0)
+
+    # Display
+    print ("The velocity vector of the ball is:")
+    print ("(%.2f, %.2f, %.2f)" %(x1 - x0, y1 - y0, z1 - z0))
+    print ("At time t + %d, ball coordinates will be:" %n)
+    print ("(%.2f, %.2f, %.2f)" %(xt, yt, zt))
+    if ((z1 - z0 == 0) or (-z1 / (z1 - z0)) < 0) :
+        print ("The ball won't reach the paddle.")
+        sys.exit(0)
+
+    # Angle
+    if (sqrt(pow(x1 - x0, 2) + pow(y1 - y0, 2) + pow(z1 - z0, 2) == 0)) :
+        angle = 0
+    else :
+        angle = (((x1 - x0) * 0) + ((y1 - y0) * 0) + ((z1 - z0) * 1)) / (sqrt(pow(x1 - x0, 2) + pow(y1 - y0, 2) + pow(z1 - z0, 2)))
+        angle = acos(angle)
+        angle *= 180/pi
+    while (angle < 0 or angle > 90) :
+        if (angle < 0) :
+            angle += 90
+        else :
+            angle -= 90
+
+    # Display
+    print ("The incidence angle is:")
+    print (("%.2f degrees") %(angle))
+
+# Usage function (only called when input doesn't match the usage)
+def usage() :
+    print ("USAGE")
+    print ("    ./101pong x0 y0 z0 x1 y1 z1 n")
+    print ("")
+    print ("DESCRIPTION")
+    print ("    x0  ball abscissa at time t - 1")
+    print ("    y0  ball abscissa at time t - 1")
+    print ("    z0  ball abscissa at time t - 1")
+    print ("    x1  ball abscissa at time t")
+    print ("    y1  ball abscissa at time t")
+    print ("    z1  ball abscissa at time t")
+    print ("    n   time shift (greater than or equal to zero, integer)")
+
+def wrong_type() :
+    usage()
+    print("")
+    print("PROBLEM")
+    print("    x0, y0, z0, x1, y1, z1 have to be float or integer")
+    print("    n has to be a positive integer")
+
+main()
