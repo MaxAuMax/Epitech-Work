@@ -1,4 +1,4 @@
-## C-Pool Days
+## Personnal Epitech GitHub
 Nearly all my projects / works of the 1st year
 
 # ⚠️ BEWARE ⚠️
