@@ -1,0 +1,17 @@
+// My_Runner 2021-2022 \\
+
+The goal of this project is to create a Runner game (such as subway Surfer) with CSFML.
+To win a game, you will have to jump over ALL enemies coming in front of you. If you touch them, it's OVER !
+
+USAGE :
+>>    ./my_runner src/map/MAP.txt
+>>    map1.txt is the easiest, map3.txt is the hardest to finish.
+
+GAME INTEACTIONS :
+>>    Play your level with the PLAY button.
+>>    SPACE_KEY to jump.
+>>    Change your character in the SETTINGS.
+>>    Quit the game when you want with the QUIT button.
+
+OTHER INTERACTIONS :
+>>    ./my_runner -h        Display this text.
