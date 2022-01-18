@@ -1,5 +1,5 @@
-## C-Pool Days
-Nearly all my projects / works of the 1st year
+## Semester 2 Projects
+All my projects from the 2nd Semester
 
 # ⚠️ BEWARE ⚠️
 This is a public repository, use this code as you want ! But if you are from Epitech, i know why you're here heheheeeee 👀 !

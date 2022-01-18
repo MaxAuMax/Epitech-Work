@@ -1,7 +1,9 @@
 ## Elementary CPE
 All my projects from the module Elementary CPE
 > Antman : Compress & Decompress files such as .txt .html .jpeg .png
+
 > BSQ : Finding the biggest square possible in a map filled with some obstacles
+
 > Pushswap : Algorithm to sort a list of numbers thanks to another empty list
 
 # ⚠️ BEWARE ⚠️

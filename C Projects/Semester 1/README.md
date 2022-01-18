@@ -1,7 +1,9 @@
 ## Semester 1 Projects
 All my projects from the 1st Semester
 > Elementary : In a variety of ways, this unit will train you in (and allow you to practice the basics of) programming and problem analysis and the division and rigorous implementation that they demand. 
+
 > Graphical : The graphical programming consists in creating images/animations and scenes management using algorithms and graphical resources.
+
 > Unix : All the fundamental elements of UNIX programming
 
 # ⚠️ BEWARE ⚠️

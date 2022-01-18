@@ -1,8 +1,11 @@
 ## Unix PSU
 All my projects from the module Elementary CPE
 > Minishell n°1 : Basic copy of a shell
+
 > My_Ls : Basic copy of the **ls** function
+
 > My_Printf : Basic copy of the **printf** function
+
 > Navy : Replica of the **Battleship** game
 
 # ⚠️ BEWARE ⚠️

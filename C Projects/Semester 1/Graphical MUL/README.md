@@ -1,6 +1,7 @@
 ## Graphical MUL
 All my projects from the module Grahical MUL
 > Hunter : Replica of the old game **Duck Hunt**
+
 > Runner : Creation of a runner game such as Geometry Dash
 
 # ⚠️ BEWARE ⚠️
