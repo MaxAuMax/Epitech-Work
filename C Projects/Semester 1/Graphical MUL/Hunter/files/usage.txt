@@ -1,0 +1,21 @@
+DESCRIPTION OF THE GAME :
+  --> In this game you are a Hunter !
+  --> Your goal is to shoot as many Ducks as you can.
+  --> They will appear randomly on your screen and by just clicking on them, you earn points.
+  --> Don't loose too much bullet or you loose ! (MAX 3 bullets)
+  --> Try to get the Highest Score :D
+  --> Win the round by killing 10 of them.
+  --> You can choose between 3 levels ! (vv Look at USEFUL INFORMATION vv)
+
+    !!! SHOOT THEM ALL !!!
+
+USEFUL INFORMATIONS :
+  --> Use "./my_hunter" or "./my_hunter 1" to launch the game in level 1.
+  --> Usa "./my_hunter 2" to launch the game in level 2;
+  --> Usa "./my_hunter 3" to launch the game in level 3;
+  --> Use "./my_hunter -h" for help.
+  --> Press ESCAPE key to leave the game at any moment.
+    
+/\/\                                           /\/\
+---- Game made by Maxime Mallet, Epitech 2021. ----
+\/\/                                           \/\/
