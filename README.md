@@ -1,3 +1,5 @@
+![image](https://i.imgur.com/bGfJBqk.png)
+
 ## Personnal Epitech GitHub
 Nearly all my projects / works of the 1st year
 
