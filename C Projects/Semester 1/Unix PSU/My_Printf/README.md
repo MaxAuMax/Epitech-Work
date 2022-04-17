@@ -1,4 +1,4 @@
-# B-PSU-100-NCE-1-1-myprintf-maxime.mallet
+# my_printf
 
 You must recode the printf function from the C library according to the C99 standard. Your function should
 be prototyped like the printf function.
