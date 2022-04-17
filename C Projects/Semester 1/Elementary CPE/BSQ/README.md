@@ -1,4 +1,4 @@
-# B-CPE-110-NCE-1-1-BSQ-maxime.mallet
+# BSQ
 
 ## The project
 
