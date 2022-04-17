@@ -1,4 +1,4 @@
-# Antman
+# Antman (marche pas ...)
 
 The goal of this project is to compress data. You will write two programs.
 The first one will take a file as input and compress it.
