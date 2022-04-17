@@ -1,4 +1,4 @@
-# B-MUL-100-NCE-1-1-myhunter-maxime.mallet
+# Hunter
 
 In this project, you are asked to make a small video game based on the rules of Duck Hunt.
 
