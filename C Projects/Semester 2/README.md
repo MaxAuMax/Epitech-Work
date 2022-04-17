@@ -1,5 +1,12 @@
 ## Semester 2 Projects
 All my projects from the 2nd Semester
+> Graphical : Graphical programming consists in creating images/animations and scenes management using algorithms and graphical resources.
+
+> Elementary (Part 1) : In a variety of ways, this unit will train you in (and allow you to practice the basics of) programming and problem analysis and the division and meticulous implementation that they demand. 
+
+> Unix : Let's continue with the fundamentals of UNIX programming.
+
+> Introductions : Introductions to different IT domain.
 
 # ⚠️ BEWARE ⚠️
 This is a public repository, use this code as you want ! But if you are from Epitech, i know why you're here heheheeeee 👀 !
