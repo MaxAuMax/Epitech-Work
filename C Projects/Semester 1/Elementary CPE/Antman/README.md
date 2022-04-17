@@ -1,4 +1,4 @@
-# B-CPE-110-NCE-1-1-antman-maxime.mallet
+# Antman
 
 The goal of this project is to compress data. You will write two programs.
 The first one will take a file as input and compress it.
