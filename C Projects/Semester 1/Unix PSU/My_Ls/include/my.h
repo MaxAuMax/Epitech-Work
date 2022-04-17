@@ -1,71 +1,76 @@
 /*
-** EPITECH PROJECT, 2021
-** mmaxime
+** EPITECH PROJECT, 2022
+** my h
 ** File description:
-** my.h
+** include for lib
 */
 
+#include <criterion/criterion.h>
+#include <criterion/redirect.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
+#include <dirent.h>
+#include <signal.h>
 #include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <pwd.h>
+#include <grp.h>
+#include <time.h>
+#include <ncurses.h>
 
 #ifndef MY_H_
     #define MY_H_
 
-char my_putchar(char c);
-int my_isneg(int nb);
-int my_strcmp(char const *s1, char const *s2);
-int my_put_nbr(int nb);
-int my_strncmp(char const *s1, char const *s2, int n);
-void my_swap(int *a, int *b);
-char *my_strupcase(char *str);
-int my_putstr(char const *str);
-char *my_strlowcase(char *str);
-int my_strlen(char const *str);
-char *my_strcapitalize(char *str);
-int my_getnbr(char const *str);
-int my_str_isalpha(char const *str);
-void my_sort_int_array(int *tab, int size);
-int my_str_isnum(char const *str);
-int my_compute_power_rec(int nb, int power);
-int my_str_islower(char const *str);
-int my_compute_square_root(int nb);
-int my_str_isupper(char const *str);
-int my_is_prime(int nb);
-int my_str_isprintable(char const *str);
-int my_find_prime_sup(int nb);
-int my_showstr(char const *str);
-char *my_strcpy(char *dest, char const *src);
-int my_showmem(char const *str, int size);
-char *my_strncpy(char *dest, char const *src, int n);
-char *my_strcat(char *dest, char const *src);
+char *my_int_to_str(int nbr);
+void my_put_nbr(long long int nb);
+void my_putchar(char c);
+void my_putstr(char *str);
 char *my_revstr(char *str);
-char *my_strncat(char *dest, char const *src, int nb);
-char *my_strdup(char *src);
-int my_show_word_array(char * const *tab);
-char **my_str_to_word_array(char *str);
-char *my_int_to_str(int nb);
 int my_str_to_int(char *str);
-void *sub(char *str, int i);
-void my_int_to_bin(int n);
-void my_int_to_oct(int n);
-void my_int_to_hex(int n);
-void my_int_to_lower_hex(int n);
-void my_printf(char *str, ...);
+int my_strlen(char *str);
+int my_strstrlen(char **str);
+int my_strcmp(char *fst, char *snd);
+int my_strncmp(char *fst, char *snd, int n);
+char *my_strncat(char *dest, char const *src, int n);
+char *my_strcat(char *dest, char *src);
+
+void print_arg(char **array);
+
+char **my_str_to_word_array(char *str);
+int word_len(char *str, int i);
+int count(char *str);
+int is_charac(char c, int status);
+
+char **my_str_to_word_array_sep(char *str, char sep);
+int count_sep(char *str, char sep);
+int is_charac_sep(char c, char sep);
+char *my_strncpy(char *dest, char *src, int n);
+
+void disp_stdarg(char s, va_list list);
+void disp2(char s, va_list list);
+void disp3(char s, va_list list);
+void disp4(char s, va_list list);
+void disp5(char s, va_list list);
 void disps(char str);
-void flagb(va_list list);
-void flagc(va_list list);
-void flagi(va_list list);
-void flago(va_list list);
-void flagpo(va_list list);
-void flags(va_list list);
-void flagss(va_list list);
-void flagu(va_list list);
-void flagx(va_list list);
-void flagxx(va_list list);
-int flagp(va_list list);
-int my_put_pointer(long nbr, char *base);
-int check(char *str, int i, va_list list);
-void my_show_int_array(int *array);
+void my_printf(char *str, ...);
+void my_int_to_bin(int n);
+void my_int_to_hex(int n);
+void my_int_to_oct(int n);
 
-int my_ls(char *way, char *flag);
+typedef struct st_flags {
+    int l;
+    char *dir;
+} t_flags;
 
-#endif
+void basic_ls(DIR *odir);
+void locate_dir(int ac, char **av, t_flags *flags);
+void check_flags(int ac, char **av, t_flags *flags);
+int launch_flags(t_flags *flags);
+void ls_l(t_flags *flags, DIR *odir, DIR *oodir);
+
+#endif /* MY_H_ */
