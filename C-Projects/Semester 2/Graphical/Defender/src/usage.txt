@@ -1,0 +1,15 @@
+// My_Defender 2021-2022 \\
+
+This project is a Tower Defense game using CSFML.
+A Good example of this kind of games is Revenge of the titans.
+Your goal is to protect your base from ennemies, by using towers that you can place on the map.
+Place your towers, Upgrade, Moove and Destroy them ( if you have enough money :o ) !
+
+USAGE :
+>>    ./my_defender
+
+GAME INTEACTIONS :
+>>    See in game !
+
+OTHER INTERACTIONS :
+>>    ./my_defender -h        Display this text.
